@@ -1,6 +1,6 @@
 baseURL = "http://localhost"
 title = "Geekdocs-1"
-theme = "geekdoc"
+theme = "hugo-geekdoc"
 
 pluralizeListTitles = false
 
