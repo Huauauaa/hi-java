@@ -1,4 +1,4 @@
-baseURL = "http://localhost"
+baseURL = "/hi-java"
 title = "Geekdocs-1"
 theme = "hugo-geekdoc"
 
