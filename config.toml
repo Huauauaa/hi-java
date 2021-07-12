@@ -1,5 +1,5 @@
 baseURL = "/hi-java"
-title = "Geekdocs-1"
+title = "Java"
 theme = "hugo-geekdoc"
 
 pluralizeListTitles = false
@@ -18,3 +18,8 @@ enableInlineShortcodes = true
   [markup.tableOfContents]
     startLevel = 1
     endLevel = 9
+
+[params]
+  geekdocLogo = "/java-logo.png"
+  geekdocRepo = "https://github.com/Huauauaa/hi-java"
+  geekdocEditPath = "edit/main/content"
