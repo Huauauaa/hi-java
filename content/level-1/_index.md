@@ -53,3 +53,11 @@ f(x) = \int\_{-\infty}^\infty\hat f(\xi)\,e^{2 \pi i \xi x}\,d\xi
 {{< katex display >}}
 v = x_0
 {{< /katex >}}
+
+{{< mermaid >}}
+graph LR;
+A[Hard edge] -->|Link text| B(Round edge)
+B --> C{Decision}
+C -->|One| D[Result one]
+C -->|Two| E[Result two]
+{{< /mermaid >}}
