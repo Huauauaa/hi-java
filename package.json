@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "pnpm build:theme && pnpm --filter @hi-java/site dev",
     "build": "pnpm build:theme && pnpm --filter @hi-java/site build",
-    "build:theme": "npm install --prefix packages/hugo-geekdoc && npm exec --prefix packages/hugo-geekdoc -- gulp default",
+    "build:theme": "npm install --prefix packages/hugo-geekdoc && npm --prefix packages/hugo-geekdoc run gulp -- default",
     "build:site": "pnpm --filter @hi-java/site build"
   },
   "author": "Harvey",
