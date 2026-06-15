@@ -6,9 +6,12 @@
   "packageManager": "pnpm@10.14.0",
   "scripts": {
     "dev": "pnpm build:theme && pnpm --filter @hi-java/site dev",
-    "build": "pnpm build:theme && pnpm --filter @hi-java/site build",
+    "dev:school": "pnpm --filter @hi-java/school dev",
+    "build": "pnpm build:theme && pnpm build:site && pnpm build:school && pnpm merge:pages",
     "build:theme": "npm install --prefix packages/hugo-geekdoc && npm --prefix packages/hugo-geekdoc run gulp -- default",
-    "build:site": "pnpm --filter @hi-java/site build"
+    "build:site": "pnpm --filter @hi-java/site build",
+    "build:school": "VITE_BASE=${VITE_BASE:-/hi-java/school/} pnpm --filter @hi-java/school build",
+    "merge:pages": "mkdir -p apps/site/public/school && cp -r apps/school/dist/. apps/site/public/school/"
   },
   "author": "Harvey",
   "license": "MIT"
