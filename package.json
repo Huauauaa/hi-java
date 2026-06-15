@@ -1,16 +1,15 @@
 {
   "name": "hi-java",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Java learning notes — Hugo documentation site",
+  "packageManager": "pnpm@10.14.0",
   "scripts": {
-    "start": "hugo server -D --config local.toml",
-    "build": "hugo -D -d dist"
+    "dev": "pnpm build:theme && pnpm --filter @hi-java/site dev",
+    "build": "pnpm build:theme && pnpm --filter @hi-java/site build",
+    "build:theme": "pnpm --dir packages/hugo-geekdoc install && pnpm --dir packages/hugo-geekdoc exec gulp default",
+    "build:site": "pnpm --filter @hi-java/site build"
   },
-  "keywords": [],
   "author": "Harvey",
-  "license": "MIT",
-  "dependencies": {
-    "gulp": "^4.0.2"
-  }
+  "license": "MIT"
 }

@@ -1,0 +1,9 @@
+{
+  "name": "@hi-java/site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "hugo server -D --config local.toml",
+    "build": "hugo --minify"
+  }
+}
