@@ -49,23 +49,16 @@ const courses = [
 
 const docsUrl = import.meta.env.PROD
   ? 'https://huauauaa.github.io/hi-java/'
-  : 'http://localhost:1313/';
+  : 'http://localhost:1313/hi-java/';
 
 export const HomePage: FC<Props> = ({ navigate }) => (
   <SchoolLayout>
     <div className="mx-auto w-full max-w-6xl px-6 py-10">
       <section className="mb-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 px-8 py-12 text-white shadow-lg">
-        <Tag color="gold" className="mb-4">
-          React + Ant Design + Tailwind CSS
-        </Tag>
         <Title level={1} className="!text-white">
           欢迎来到 School
         </Title>
-        <Paragraph className="max-w-2xl text-base !text-blue-50">
-          这是 hi-java 的 Web 学习入口，聚合课程导航与文档站点。从 Java 学习路线开始，
-          在召唤师峡谷风格的题面中答题练手。
-        </Paragraph>
-        <Space wrap>
+        <Space wrap className="mt-6">
           <Button
             type="primary"
             size="large"

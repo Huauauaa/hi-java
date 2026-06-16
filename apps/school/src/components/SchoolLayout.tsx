@@ -6,7 +6,7 @@ import {
 import { Button, Layout, Space, Typography } from 'antd';
 import type { FC, ReactNode } from 'react';
 
-const { Header, Footer } = Layout;
+const { Header } = Layout;
 const { Title, Text } = Typography;
 
 type Props = {
@@ -17,9 +17,11 @@ type Props = {
   dark?: boolean;
 };
 
-const docsUrl = import.meta.env.PROD
-  ? 'https://huauauaa.github.io/hi-java/'
-  : 'http://localhost:1313/';
+const docsOrigin = import.meta.env.PROD
+  ? 'https://huauauaa.github.io/hi-java'
+  : 'http://localhost:1313/hi-java';
+
+const docsUrl = `${docsOrigin}/`;
 
 export const SchoolLayout: FC<Props> = ({
   children,
@@ -45,17 +47,21 @@ export const SchoolLayout: FC<Props> = ({
             {backLabel}
           </Button>
         )}
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-          <ReadOutlined />
-        </div>
-        <div>
-          <Title level={5} className={`!mb-0 ${dark ? '!text-[#eff1f6]' : ''}`}>
-            School
-          </Title>
-          <Text type="secondary" className={`text-xs ${dark ? '!text-[#8c8c8c]' : ''}`}>
-            hi-java 学习门户
-          </Text>
-        </div>
+        {!dark && (
+          <>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
+              <ReadOutlined />
+            </div>
+            <div>
+              <Title level={5} className="!mb-0">
+                School
+              </Title>
+              <Text type="secondary" className="text-xs">
+                hi-java 学习门户
+              </Text>
+            </div>
+          </>
+        )}
       </Space>
       <Space>
         {extra}
@@ -80,10 +86,5 @@ export const SchoolLayout: FC<Props> = ({
       </Space>
     </Header>
     {children}
-    {!dark && (
-      <Footer className="border-t border-slate-200 bg-white text-center text-slate-500">
-        hi-java School · Built with React, Ant Design & Tailwind CSS
-      </Footer>
-    )}
   </Layout>
 );

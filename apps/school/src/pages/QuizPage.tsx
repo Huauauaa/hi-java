@@ -4,13 +4,16 @@ import {
   CloudUploadOutlined,
   PlayCircleOutlined,
 } from '@ant-design/icons';
-import { Button, Space, Tabs, Tag, Typography, message } from 'antd';
+import { Button, Modal, Space, Tabs, Tag, Typography, message } from 'antd';
 import type { FC } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CodeEditor } from '../components/CodeEditor';
+import { KnowledgeTag } from '../components/KnowledgeTag';
 import { SchoolLayout } from '../components/SchoolLayout';
 import { getChapter } from '../data/chapters';
+import { chapterSiteUrl } from '../data/siteLinks';
 import { getAdjacentChapter, getQuiz } from '../data/quizzes';
+import { getRecord, addSubmission, saveRecord, type SubmitVersion } from '../lib/quizProgress';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -21,15 +24,6 @@ type Props = {
 
 const diffColor = { Easy: 'green', Medium: 'orange', Hard: 'red' } as const;
 
-function markDone(chapterId: string) {
-  const key = 'java-route-done-ids';
-  const raw = localStorage.getItem(key);
-  const ids = new Set<string>(raw ? JSON.parse(raw) : []);
-  ids.add(chapterId);
-  localStorage.setItem(key, JSON.stringify([...ids]));
-  localStorage.setItem('java-route-done', String(ids.size));
-}
-
 export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
   const chapter = getChapter(chapterId);
   const quiz = getQuiz(chapterId);
@@ -37,25 +31,61 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
 
   const [code, setCode] = useState('');
   const [result, setResult] = useState<{ pass: boolean; message: string } | null>(null);
+  const [submissions, setSubmissions] = useState<SubmitVersion[]>([]);
+  const [viewSubmit, setViewSubmit] = useState<SubmitVersion | null>(null);
   const [bottomTab, setBottomTab] = useState('testcase');
+  const statusRef = useRef<'doing' | 'done' | 'todo'>('todo');
+  const loadedRef = useRef(false);
 
   useEffect(() => {
-    if (quiz) setCode(quiz.starterCode);
-    setResult(null);
-    setBottomTab('testcase');
+    loadedRef.current = false;
+    let cancelled = false;
+    (async () => {
+      if (!quiz) return;
+      const record = await getRecord(chapterId);
+      if (cancelled) return;
+      statusRef.current = record?.status ?? 'todo';
+      setCode(record?.content || quiz.starterCode);
+      setSubmissions(record?.submissions ?? []);
+      setResult(null);
+      setBottomTab('testcase');
+      loadedRef.current = true;
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [chapterId, quiz]);
 
+  useEffect(() => {
+    if (!quiz || !loadedRef.current || statusRef.current === 'done') return;
+    if (code === quiz.starterCode && statusRef.current === 'todo') return;
+    const t = setTimeout(() => {
+      saveRecord(chapterId, code, 'doing');
+      statusRef.current = 'doing';
+    }, 400);
+    return () => clearTimeout(t);
+  }, [code, chapterId, quiz]);
+
   const runCheck = useCallback(
-    (submit: boolean) => {
+    async (submit: boolean) => {
       if (!quiz) return;
       const r = quiz.validate(code);
       setResult(r);
       setBottomTab('result');
-      if (r.pass) {
-        markDone(chapterId);
-        message.success(submit ? '提交成功！' : '运行通过');
+      if (submit) {
+        const list = await addSubmission(chapterId, code, r.pass, r.message);
+        setSubmissions(list);
+        statusRef.current = r.pass ? 'done' : statusRef.current === 'done' ? 'done' : 'doing';
+      } else if (r.pass) {
+        await saveRecord(chapterId, code, 'done');
+        statusRef.current = 'done';
+        message.success('运行通过');
       } else {
         message.error(r.message);
+        return;
+      }
+      if (submit) {
+        message[r.pass ? 'success' : 'error'](r.pass ? '提交成功！' : r.message);
       }
     },
     [code, quiz, chapterId],
@@ -104,9 +134,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
           <Space>
             <Tag color={diffColor[quiz.difficulty]}>{quiz.difficulty}</Tag>
             {quiz.tags.map((t) => (
-              <Tag key={t} className="!border-[#3a3a3a] !bg-[#1a1a1a] !text-[#b3b3b3]">
-                {t}
-              </Tag>
+              <KnowledgeTag key={t} tag={t} chapterId={chapterId} className="!border-[#3a3a3a] !bg-[#1a1a1a] !text-[#b3b3b3]" />
             ))}
           </Space>
           <Space>
@@ -134,7 +162,14 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
             <Title level={4} className="!text-[#eff1f6] !mb-1">
               {chapter.num}. {quiz.title}
             </Title>
-            <Text className="!text-[#8c8c8c] text-sm">{chapter.title}</Text>
+            <a
+              href={chapterSiteUrl(chapterId)}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-[#8c8c8c] hover:text-[#ffa116]"
+            >
+              {chapter.title}
+            </a>
 
             <div className="mt-5 space-y-4 text-[#eff1f6] text-sm leading-relaxed">
               {quiz.story.split('\n\n').map((p, i) => (
@@ -251,12 +286,96 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                       </div>
                     ),
                   },
+                  {
+                    key: 'history',
+                    label: '提交记录',
+                    children: (
+                      <div className="overflow-y-auto px-2 pb-2">
+                        {submissions.length === 0 ? (
+                          <Text className="!text-[#6e7681] text-xs">暂无提交记录</Text>
+                        ) : (
+                          submissions.map((s, i) => (
+                            <div
+                              key={s.submittedAt}
+                              className="mb-2 flex items-center justify-between gap-2 rounded border border-[#3a3a3a] bg-[#282828] px-3 py-2"
+                            >
+                              <Space size="small" wrap>
+                                <Text className="!text-[#b3b3b3] text-xs">
+                                  #{submissions.length - i}
+                                </Text>
+                                <Text className="!text-[#8c8c8c] text-xs">
+                                  {new Date(s.submittedAt).toLocaleString('zh-CN')}
+                                </Text>
+                                <Tag color={s.pass ? 'success' : 'error'} className="!mr-0">
+                                  {s.pass ? '通过' : '未通过'}
+                                </Tag>
+                              </Space>
+                              <Button
+                                type="link"
+                                size="small"
+                                className="!text-[#ffa116] shrink-0"
+                                onClick={() => setViewSubmit(s)}
+                              >
+                                查看
+                              </Button>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    ),
+                  },
                 ]}
               />
             </div>
           </div>
         </div>
       </div>
+
+      <Modal
+        title={
+          viewSubmit
+            ? `提交记录 · ${new Date(viewSubmit.submittedAt).toLocaleString('zh-CN')}`
+            : '提交记录'
+        }
+        open={!!viewSubmit}
+        onCancel={() => setViewSubmit(null)}
+        width={720}
+        className="submit-code-modal"
+        footer={[
+          <Button key="close" onClick={() => setViewSubmit(null)}>
+            关闭
+          </Button>,
+          <Button
+            key="restore"
+            type="primary"
+            onClick={() => {
+              if (!viewSubmit) return;
+              setCode(viewSubmit.content);
+              setResult({ pass: viewSubmit.pass, message: viewSubmit.message });
+              setViewSubmit(null);
+              setBottomTab('result');
+            }}
+          >
+            恢复到编辑器
+          </Button>,
+        ]}
+      >
+        {viewSubmit && (
+          <>
+            <Space className="mb-3">
+              <Tag color={viewSubmit.pass ? 'success' : 'error'}>
+                {viewSubmit.pass ? '通过' : '未通过'}
+              </Tag>
+              <Text type="secondary" className="text-sm">
+                {viewSubmit.message}
+              </Text>
+            </Space>
+            <pre className="max-h-[420px] overflow-auto rounded-lg bg-[#1e1e1e] p-4 font-mono text-sm leading-6 text-[#d4d4d4] whitespace-pre-wrap">
+              {viewSubmit.content}
+            </pre>
+          </>
+        )}
+      </Modal>
     </SchoolLayout>
   );
 };
