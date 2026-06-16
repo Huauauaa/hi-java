@@ -82,7 +82,7 @@ export const RoutePage: FC<Props> = ({ navigate }) => {
             type="primary"
             size="large"
             icon={<PlayCircleOutlined />}
-            className="mt-5 !shadow-[0_10px_24px_-14px_rgba(200,121,10,0.9)]"
+            className="mt-5 !shadow-[0_10px_24px_-14px_rgba(255,161,22,0.45)]"
             onClick={() => navigate(`/java-route/${firstOpen}`)}
           >
             {hasDoing ? '继续答题' : '从第 1 章开始答题'}

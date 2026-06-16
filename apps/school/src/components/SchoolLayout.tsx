@@ -13,19 +13,19 @@ type Props = {
   onBack?: () => void;
   backLabel?: string;
   extra?: ReactNode;
-  dark?: boolean;
+  compact?: boolean;
 };
 
 const docsOrigin = import.meta.env.PROD ? 'https://huauauaa.github.io/hi-java' : 'http://localhost:1313/hi-java';
 
 const docsUrl = `${docsOrigin}/`;
 
-export const SchoolLayout: FC<Props> = ({ children, onBack, backLabel = '返回首页', extra, dark = false }) => {
+export const SchoolLayout: FC<Props> = ({ children, onBack, backLabel = '返回首页', extra, compact = false }) => {
   const shellRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (dark || prefersReducedMotion()) return;
+      if (compact || prefersReducedMotion()) return;
       gsap.from('.school-header', {
         y: -16,
         opacity: 0,
@@ -33,28 +33,19 @@ export const SchoolLayout: FC<Props> = ({ children, onBack, backLabel = '返回�
         ease: 'power3.out',
       });
     },
-    { scope: shellRef, dependencies: [dark] },
+    { scope: shellRef, dependencies: [compact] },
   );
 
   return (
-    <Layout ref={shellRef} className={`school-shell min-h-screen ${dark ? 'bg-[#1a1a1a]' : 'bg-transparent'}`}>
-      <Header
-        className={`school-header flex items-center justify-between px-4 md:px-6 ${
-          dark ? 'border-b border-[#3a3a3a] bg-[#282828]' : ''
-        }`}
-      >
+    <Layout ref={shellRef} className="school-shell min-h-screen">
+      <Header className="school-header flex items-center justify-between px-4 md:px-6">
         <Space align="center">
           {onBack && (
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined />}
-              onClick={onBack}
-              className={dark ? '!text-[#eff1f6]' : '!text-[var(--ink)]'}
-            >
+            <Button type="text" icon={<ArrowLeftOutlined />} onClick={onBack} className="!text-[var(--ink)]">
               {backLabel}
             </Button>
           )}
-          {!dark && (
+          {!compact && (
             <a
               href="#/"
               className="school-brand-mark flex h-9 w-9 items-center justify-center rounded-xl text-white no-underline"
@@ -66,13 +57,7 @@ export const SchoolLayout: FC<Props> = ({ children, onBack, backLabel = '返回�
         </Space>
         <Space wrap>
           {extra}
-          <Button
-            type="link"
-            href={docsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={dark ? '!text-[#ffa116]' : '!text-[var(--amber)]'}
-          >
+          <Button type="link" href={docsUrl} target="_blank" rel="noreferrer" className="!text-[var(--amber)]">
             Java 文档
           </Button>
           <Button
@@ -81,7 +66,7 @@ export const SchoolLayout: FC<Props> = ({ children, onBack, backLabel = '返回�
             href="https://github.com/Huauauaa/hi-java"
             target="_blank"
             rel="noreferrer"
-            className={dark ? undefined : '!shadow-[0_10px_24px_-14px_rgba(200,121,10,0.9)]'}
+            className="!shadow-[0_10px_24px_-14px_rgba(255,161,22,0.45)]"
           >
             GitHub
           </Button>

@@ -134,8 +134,8 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-1 overflow-hidden bg-[#1e1e1e] font-mono text-sm">
-      <div className="select-none overflow-hidden border-r border-[#3a3a3a] bg-[#1e1e1e] py-3 pr-2 text-right text-[#6e7681]">
+    <div className="flex h-full min-h-0 flex-1 overflow-hidden bg-[var(--editor-bg)] font-mono text-sm">
+      <div className="select-none overflow-hidden border-r border-[var(--editor-border)] bg-[var(--editor-bg)] py-3 pr-2 text-right text-[var(--editor-muted)]">
         {lines.map((_, i) => (
           <div key={i} className="leading-6 px-2">
             {i + 1}
@@ -147,7 +147,7 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
         <pre
           ref={highlightRef}
           aria-hidden
-          className="pointer-events-none absolute inset-0 m-0 overflow-hidden whitespace-pre-wrap wrap-break-word p-3 leading-6 text-[#d4d4d4]"
+          className="pointer-events-none absolute inset-0 m-0 overflow-hidden whitespace-pre-wrap wrap-break-word p-3 leading-6 text-[var(--editor-text)]"
           dangerouslySetInnerHTML={{ __html: highlighted + '\n' }}
         />
         <textarea
@@ -161,14 +161,14 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
-          className="relative z-10 h-full w-full resize-none border-0 bg-transparent p-3 leading-6 text-transparent caret-[#d4d4d4] outline-none selection:bg-[#264f78]"
+          className="relative z-10 h-full w-full resize-none border-0 bg-transparent p-3 leading-6 text-transparent caret-[var(--editor-text)] outline-none selection:bg-[#264f78]"
           aria-label={`${language} code editor`}
         />
 
         {popup && suggestions.length > 0 && (
           <ul
             role="listbox"
-            className="absolute z-20 max-h-48 min-w-[180px] overflow-y-auto rounded border border-[#3a3a3a] bg-[#252526] py-1 shadow-lg"
+            className="absolute z-20 max-h-48 min-w-[180px] overflow-y-auto rounded border border-[var(--editor-border)] bg-[var(--paper-raised)] py-1 shadow-lg"
             style={{ top: popup.top, left: popup.left }}
           >
             {suggestions.map((item, i) => (
@@ -178,7 +178,7 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
                   role="option"
                   aria-selected={i === activeIndex}
                   className={`flex w-full items-center justify-between gap-3 px-3 py-1 text-left text-xs ${
-                    i === activeIndex ? 'bg-[#094771] text-[#eff1f6]' : 'text-[#cccccc]'
+                    i === activeIndex ? 'bg-[#094771] text-[var(--ink)]' : 'text-[var(--ink-muted)]'
                   }`}
                   onMouseDown={(e) => {
                     e.preventDefault();
@@ -186,7 +186,7 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
                   }}
                 >
                   <span>{item.label}</span>
-                  {item.detail && <span className="text-[#8c8c8c]">{item.detail}</span>}
+                  {item.detail && <span className="text-[var(--ink-faint)]">{item.detail}</span>}
                 </button>
               </li>
             ))}

@@ -10,7 +10,7 @@ type Props = {
 
 export const KnowledgeTag: FC<Props> = ({ tag, chapterId, className }) => (
   <a href={tagSiteUrl(tag, chapterId)} target="_blank" rel="noreferrer">
-    <Tag className={`cursor-pointer transition hover:!border-[#ffa116] hover:!text-[#ffa116] ${className ?? ''}`}>
+    <Tag className={`cursor-pointer transition hover:!border-[var(--amber)] hover:!text-[var(--amber)] ${className ?? ''}`}>
       {tag}
     </Tag>
   </a>

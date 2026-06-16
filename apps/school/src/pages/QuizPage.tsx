@@ -88,15 +88,15 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
 
   if (!chapter || !quiz) {
     return (
-      <SchoolLayout onBack={() => navigate('/java-route')} dark>
-        <div className="flex flex-1 items-center justify-center text-[#eff1f6]">章节不存在</div>
+      <SchoolLayout compact onBack={() => navigate('/java-route')}>
+        <div className="flex flex-1 items-center justify-center text-[var(--ink)]">章节不存在</div>
       </SchoolLayout>
     );
   }
 
   return (
     <SchoolLayout
-      dark
+      compact
       onBack={() => navigate('/java-route')}
       backLabel="题目列表"
       extra={
@@ -106,9 +106,9 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
             icon={<CaretLeftOutlined />}
             disabled={!adj.prev}
             onClick={() => adj.prev && navigate(`/java-route/${adj.prev}`)}
-            className="!text-[#eff1f6]"
+            className="!text-[var(--ink)]"
           />
-          <Text className="!text-[#8c8c8c]">
+          <Text className="!text-[var(--ink-muted)]">
             {chapter.num}. {quiz.title}
           </Text>
           <Button
@@ -116,14 +116,13 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
             icon={<CaretRightOutlined />}
             disabled={!adj.next}
             onClick={() => adj.next && navigate(`/java-route/${adj.next}`)}
-            className="!text-[#eff1f6]"
+            className="!text-[var(--ink)]"
           />
         </Space>
       }
     >
       <div className="flex h-[calc(100vh-64px)] flex-col">
-        {/* LeetCode-style toolbar */}
-        <div className="flex items-center justify-between border-b border-[#3a3a3a] bg-[#282828] px-4 py-2">
+        <div className="quiz-toolbar flex items-center justify-between border-b px-4 py-2">
           <Space>
             <Tag color={diffColor[quiz.difficulty]}>{quiz.difficulty}</Tag>
             {quiz.tags.map((t) => (
@@ -131,7 +130,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                 key={t}
                 tag={t}
                 chapterId={chapterId}
-                className="!border-[#3a3a3a] !bg-[#1a1a1a] !text-[#b3b3b3]"
+                className="!border-[var(--paper-line)] !bg-[var(--paper)] !text-[var(--ink-muted)]"
               />
             ))}
           </Space>
@@ -139,7 +138,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
             <Button
               icon={<PlayCircleOutlined />}
               onClick={() => runCheck(false)}
-              className="!border-[#3a3a3a] !bg-[#1a1a1a] !text-[#eff1f6]"
+              className="!border-[var(--paper-line)] !bg-[var(--paper)] !text-[var(--ink)]"
             >
               运行
             </Button>
@@ -147,7 +146,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
               type="primary"
               icon={<CloudUploadOutlined />}
               onClick={() => runCheck(true)}
-              className="!bg-[#2cbb5d] !border-[#2cbb5d]"
+              className="!border-[var(--success)] !bg-[var(--success)]"
             >
               提交
             </Button>
@@ -155,33 +154,32 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
         </div>
 
         <div className="flex min-h-0 flex-1">
-          {/* Left: description */}
-          <div className="w-[45%] overflow-y-auto border-r border-[#3a3a3a] bg-[#1a1a1a] p-5">
-            <Title level={4} className="!text-[#eff1f6] !mb-1">
+          <div className="quiz-panel w-[45%] overflow-y-auto border-r p-5">
+            <Title level={4} className="!mb-1 !text-[var(--ink)]">
               {chapter.num}. {quiz.title}
             </Title>
             <a
               href={chapterSiteUrl(chapterId)}
               target="_blank"
               rel="noreferrer"
-              className="text-sm text-[#8c8c8c] hover:text-[#ffa116]"
+              className="text-sm text-[var(--ink-muted)] hover:text-[var(--amber)]"
             >
               {chapter.title}
             </a>
 
-            <div className="mt-5 space-y-4 text-[#eff1f6] text-sm leading-relaxed">
+            <div className="mt-5 space-y-4 text-sm leading-relaxed text-[var(--ink)]">
               {quiz.story.split('\n\n').map((p, i) => (
-                <Paragraph key={i} className="!text-[#eff1f6] !mb-0 whitespace-pre-wrap">
+                <Paragraph key={i} className="!mb-0 whitespace-pre-wrap !text-[var(--ink)]">
                   {p.split(/(\*\*[^*]+\*\*|`[^`]+`)/g).map((part, j) => {
                     if (part.startsWith('**') && part.endsWith('**'))
                       return (
-                        <strong key={j} className="text-[#ffa116]">
+                        <strong key={j} className="text-[var(--amber)]">
                           {part.slice(2, -2)}
                         </strong>
                       );
                     if (part.startsWith('`') && part.endsWith('`'))
                       return (
-                        <code key={j} className="rounded bg-[#282828] px-1 text-[#ffa116]">
+                        <code key={j} className="quiz-code-block rounded px-1 text-[var(--amber)]">
                           {part.slice(1, -1)}
                         </code>
                       );
@@ -192,29 +190,29 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
             </div>
 
             {quiz.examples.map((ex, i) => (
-              <div key={i} className="mt-5 rounded-lg bg-[#282828] p-4">
-                <Text strong className="!text-[#eff1f6]">
+              <div key={i} className="quiz-code-block mt-5 p-4">
+                <Text strong className="!text-[var(--ink)]">
                   示例 {i + 1}
                 </Text>
-                <pre className="mt-2 text-xs text-[#b3b3b3]">
+                <pre className="mt-2 text-xs text-[var(--ink-muted)]">
                   <div>
-                    <span className="text-[#8c8c8c]">输入：</span>
+                    <span className="text-[var(--ink-faint)]">输入：</span>
                     {ex.input}
                   </div>
                   <div>
-                    <span className="text-[#8c8c8c]">输出：</span>
+                    <span className="text-[var(--ink-faint)]">输出：</span>
                     {ex.output}
                   </div>
-                  {ex.explanation && <div className="mt-1 text-[#8c8c8c]">解释：{ex.explanation}</div>}
+                  {ex.explanation && <div className="mt-1 text-[var(--ink-faint)]">解释：{ex.explanation}</div>}
                 </pre>
               </div>
             ))}
 
             <div className="mt-5">
-              <Text strong className="!text-[#eff1f6]">
+              <Text strong className="!text-[var(--ink)]">
                 约束
               </Text>
-              <ul className="mt-2 list-disc pl-5 text-[#b3b3b3] text-sm">
+              <ul className="mt-2 list-disc pl-5 text-sm text-[var(--ink-muted)]">
                 {quiz.constraints.map((c) => (
                   <li key={c}>{c}</li>
                 ))}
@@ -222,16 +220,15 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
             </div>
           </div>
 
-          {/* Right: editor + bottom panel */}
-          <div className="flex min-w-0 flex-1 flex-col bg-[#1a1a1a]">
-            <div className="flex items-center justify-between border-b border-[#3a3a3a] bg-[#282828] px-4 py-1.5">
-              <Text className="!text-[#b3b3b3] text-xs">Java</Text>
-              <Text className="!text-[#6e7681] text-xs">自动保存</Text>
+          <div className="quiz-panel flex min-w-0 flex-1 flex-col">
+            <div className="quiz-editor-bar flex items-center justify-between border-b px-4 py-1.5">
+              <Text className="text-xs !text-[var(--ink-muted)]">Java</Text>
+              <Text className="text-xs !text-[var(--editor-muted)]">自动保存</Text>
             </div>
 
             <CodeEditor value={code} onChange={setCode} />
 
-            <div className="h-[180px] border-t border-[#3a3a3a] bg-[#1a1a1a]">
+            <div className="quiz-panel h-[180px] border-t">
               <Tabs
                 activeKey={bottomTab}
                 onChange={setBottomTab}
@@ -241,13 +238,13 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                     key: 'testcase',
                     label: '测试用例',
                     children: (
-                      <div className="overflow-y-auto px-2 pb-2 text-sm text-[#b3b3b3]">
+                      <div className="overflow-y-auto px-2 pb-2 text-sm text-[var(--ink-muted)]">
                         {quiz.examples.map((ex, i) => (
                           <div key={i} className="mb-2 font-mono text-xs">
                             case {i + 1}: {ex.input} → {ex.output}
                           </div>
                         ))}
-                        <Text className="!text-[#6e7681] text-xs">提示：{quiz.hint}</Text>
+                        <Text className="text-xs !text-[var(--editor-muted)]">提示：{quiz.hint}</Text>
                       </div>
                     ),
                   },
@@ -257,19 +254,19 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                     children: (
                       <div className="px-2 pb-2">
                         {!result ? (
-                          <Text className="!text-[#6e7681]">点击「运行」或「提交」查看结果</Text>
+                          <Text className="!text-[var(--editor-muted)]">点击「运行」或「提交」查看结果</Text>
                         ) : (
                           <div>
                             <Tag color={result.pass ? 'success' : 'error'}>{result.pass ? '通过' : '未通过'}</Tag>
                             <Paragraph
-                              className={`!mb-0 mt-2 text-sm ${result.pass ? '!text-[#2cbb5d]' : '!text-[#ff375f]'}`}
+                              className={`!mb-0 mt-2 text-sm ${result.pass ? '!text-[var(--success)]' : '!text-[var(--danger)]'}`}
                             >
                               {result.message}
                             </Paragraph>
                             {result.pass && adj.next && (
                               <Button
                                 type="link"
-                                className="mt-2 px-0 !text-[#ffa116]"
+                                className="mt-2 px-0 !text-[var(--amber)]"
                                 onClick={() => navigate(`/java-route/${adj.next}`)}
                               >
                                 下一章 →
@@ -286,16 +283,16 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                     children: (
                       <div className="overflow-y-auto px-2 pb-2">
                         {submissions.length === 0 ? (
-                          <Text className="!text-[#6e7681] text-xs">暂无提交记录</Text>
+                          <Text className="text-xs !text-[var(--editor-muted)]">暂无提交记录</Text>
                         ) : (
                           submissions.map((s, i) => (
                             <div
                               key={s.submittedAt}
-                              className="mb-2 flex items-center justify-between gap-2 rounded border border-[#3a3a3a] bg-[#282828] px-3 py-2"
+                              className="quiz-panel--raised mb-2 flex items-center justify-between gap-2 rounded border px-3 py-2"
                             >
                               <Space size="small" wrap>
-                                <Text className="!text-[#b3b3b3] text-xs">#{submissions.length - i}</Text>
-                                <Text className="!text-[#8c8c8c] text-xs">
+                                <Text className="text-xs !text-[var(--ink-muted)]">#{submissions.length - i}</Text>
+                                <Text className="text-xs !text-[var(--ink-faint)]">
                                   {new Date(s.submittedAt).toLocaleString('zh-CN')}
                                 </Text>
                                 <Tag color={s.pass ? 'success' : 'error'} className="!mr-0">
@@ -305,7 +302,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                               <Button
                                 type="link"
                                 size="small"
-                                className="!text-[#ffa116] shrink-0"
+                                className="shrink-0 !text-[var(--amber)]"
                                 onClick={() => setViewSubmit(s)}
                               >
                                 查看
@@ -328,7 +325,6 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
         open={!!viewSubmit}
         onCancel={() => setViewSubmit(null)}
         width={720}
-        className="submit-code-modal"
         footer={[
           <Button key="close" onClick={() => setViewSubmit(null)}>
             关闭
@@ -356,7 +352,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                 {viewSubmit.message}
               </Text>
             </Space>
-            <pre className="max-h-[420px] overflow-auto rounded-lg bg-[#1e1e1e] p-4 font-mono text-sm leading-6 text-[#d4d4d4] whitespace-pre-wrap">
+            <pre className="max-h-[420px] overflow-auto rounded-lg bg-[var(--editor-bg)] p-4 font-mono text-sm leading-6 whitespace-pre-wrap text-[var(--editor-text)]">
               {viewSubmit.content}
             </pre>
           </>
