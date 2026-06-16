@@ -1,5 +1,0 @@
-chore(fmt): add prettier config and format repository
-
-- add .prettierrc, format scripts, and prettier dev dependency
-- apply prettier across school app, docs, and learning route markdown
-- ignore .pnpm-store in gitignore
