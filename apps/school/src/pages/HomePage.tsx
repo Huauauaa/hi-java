@@ -30,7 +30,7 @@ type Course = {
 const courses: Course[] = [
   {
     title: 'Java 学习路线',
-    desc: '20 章由易到难，MOBA 场景答题闯关，LeetCode 式练习界面。',
+    desc: '20 章单题 + 10 整合 + 5 综合 MOBA 题，LeetCode 式练习界面。',
     tag: '闯关',
     tagClass: 'bg-[rgba(255,161,22,0.14)] text-[var(--amber)]',
     icon: <ThunderboltOutlined />,

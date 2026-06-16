@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChapterCard } from '../components/ChapterCard';
 import { SchoolLayout } from '../components/SchoolLayout';
-import { chapters } from '../data/chapters';
+import { comprehensiveChapters, coreChapters, mobaChapters } from '../data/chapters';
 import { loadProgressMap, statusOf, type QuizRecord } from '../lib/quizProgress';
 
 type Props = { navigate: (path: string) => void };
@@ -26,29 +26,38 @@ export const RoutePage: FC<Props> = ({ navigate }) => {
     return () => document.removeEventListener('visibilitychange', onVis);
   }, [reload]);
 
-  const doneCount = useMemo(() => chapters.filter((ch) => statusOf(ch.id, progress) === 'done').length, [progress]);
+  const allChapters = useMemo(() => [...coreChapters, ...mobaChapters, ...comprehensiveChapters], []);
 
-  const doingCount = useMemo(() => chapters.filter((ch) => statusOf(ch.id, progress) === 'doing').length, [progress]);
+  const doneCount = useMemo(
+    () => allChapters.filter((ch) => statusOf(ch.id, progress) === 'done').length,
+    [allChapters, progress],
+  );
+
+  const doingCount = useMemo(
+    () => allChapters.filter((ch) => statusOf(ch.id, progress) === 'doing').length,
+    [allChapters, progress],
+  );
 
   const hasDoing = doingCount > 0;
 
   const firstOpen = useMemo(() => {
-    const doing = chapters.find((ch) => statusOf(ch.id, progress) === 'doing');
+    const doing = allChapters.find((ch) => statusOf(ch.id, progress) === 'doing');
     if (doing) return doing.id;
-    const todo = chapters.find((ch) => statusOf(ch.id, progress) === 'todo');
+    const todo = allChapters.find((ch) => statusOf(ch.id, progress) === 'todo');
     return todo?.id ?? '01';
-  }, [progress]);
+  }, [allChapters, progress]);
 
-  const percent = ready ? Math.round((doneCount / chapters.length) * 100) : 0;
+  const totalCount = allChapters.length;
+  const percent = ready ? Math.round((doneCount / totalCount) * 100) : 0;
 
   return (
     <SchoolLayout onBack={() => navigate('/')} backLabel="返回首页">
       <div className="school-page mx-auto w-full max-w-6xl px-4 py-8 md:px-6 md:py-10">
         <section className="route-hero mb-10">
-          <p className="hero-eyebrow !mb-2">Java Route · 20 Chapters</p>
+          <p className="hero-eyebrow !mb-2">Java Route · 20 + 10 + 5</p>
           <h1 className="section-heading">Java 学习路线</h1>
           <p className="section-sub mt-2 max-w-2xl">
-            按章节推进 MOBA 场景练习。完成一关解锁下一关，进度保存在本地浏览器。
+            20 章单题 + 10 道整合题 + 5 道综合题（每题 4 个以上知识点）。进度保存在本地浏览器。
           </p>
 
           <div className="route-hero__stats">
@@ -62,7 +71,7 @@ export const RoutePage: FC<Props> = ({ navigate }) => {
             </div>
             <div className="route-stat">
               <span className="route-stat__label">总章节</span>
-              <span className="route-stat__value">{chapters.length}</span>
+              <span className="route-stat__value">{totalCount}</span>
             </div>
           </div>
 
@@ -73,7 +82,7 @@ export const RoutePage: FC<Props> = ({ navigate }) => {
             <div className="route-progress__meta">
               <span>通关进度</span>
               <span>
-                {ready ? `${doneCount}/${chapters.length}` : '加载中…'} · {percent}%
+                {ready ? `${doneCount}/${totalCount}` : '加载中…'} · {percent}%
               </span>
             </div>
           </div>
@@ -90,12 +99,44 @@ export const RoutePage: FC<Props> = ({ navigate }) => {
         </section>
 
         <div className="mb-5">
-          <h2 className="section-heading text-[1.35rem]">章节列表</h2>
-          <p className="section-sub">点击卡片进入对应练习</p>
+          <h2 className="section-heading text-[1.35rem]">章节练习（20 章）</h2>
+          <p className="section-sub">每章一题，对应文档知识点</p>
+        </div>
+
+        <div className="chapter-grid mb-12">
+          {coreChapters.map((ch) => (
+            <ChapterCard
+              key={ch.id}
+              chapter={ch}
+              status={statusOf(ch.id, progress)}
+              onOpen={(id) => navigate(`/java-route/${id}`)}
+            />
+          ))}
+        </div>
+
+        <div className="mb-5">
+          <h2 className="section-heading text-[1.35rem]">MOBA 整合题（10 题）</h2>
+          <p className="section-sub">跨章节综合场景，知识点数量因题而异</p>
+        </div>
+
+        <div className="chapter-grid mb-12">
+          {mobaChapters.map((ch) => (
+            <ChapterCard
+              key={ch.id}
+              chapter={ch}
+              status={statusOf(ch.id, progress)}
+              onOpen={(id) => navigate(`/java-route/${id}`)}
+            />
+          ))}
+        </div>
+
+        <div className="mb-5">
+          <h2 className="section-heading text-[1.35rem]">MOBA 综合题（5 题）</h2>
+          <p className="section-sub">每题整合 4 个以上知识点，大型场景编程</p>
         </div>
 
         <div className="chapter-grid">
-          {chapters.map((ch) => (
+          {comprehensiveChapters.map((ch) => (
             <ChapterCard
               key={ch.id}
               chapter={ch}

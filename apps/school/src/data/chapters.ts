@@ -27,8 +27,27 @@ export const chapters: Chapter[] = [
   { id: '18', num: 18, title: 'JVM 原理', difficulty: 5, stage: '底层与架构' },
   { id: '19', num: 19, title: '设计模式', difficulty: 5, stage: '底层与架构' },
   { id: '20', num: 20, title: '框架与工程实践', difficulty: 5, stage: '底层与架构' },
+  { id: '21', num: 21, title: '逆风守家决策', difficulty: 1, stage: 'MOBA 整合' },
+  { id: '22', num: 22, title: '五杀榜与 MVP', difficulty: 2, stage: 'MOBA 整合' },
+  { id: '23', num: 23, title: '技能冷却链', difficulty: 2, stage: 'MOBA 整合' },
+  { id: '24', num: 24, title: '分身英雄实验室', difficulty: 3, stage: 'MOBA 整合' },
+  { id: '25', num: 25, title: '排位队列网关', difficulty: 3, stage: 'MOBA 整合' },
+  { id: '26', num: 26, title: '装备箱读档', difficulty: 3, stage: 'MOBA 整合' },
+  { id: '27', num: 27, title: '抢龙协同一触即发', difficulty: 4, stage: 'MOBA 整合' },
+  { id: '28', num: 28, title: '战术接口探测', difficulty: 4, stage: 'MOBA 整合' },
+  { id: '29', num: 29, title: '野区战绩复盘', difficulty: 4, stage: 'MOBA 整合' },
+  { id: '30', num: 30, title: '峡谷数据中心', difficulty: 5, stage: 'MOBA 整合' },
+  { id: '31', num: 31, title: '团战集结系统', difficulty: 4, stage: 'MOBA 综合' },
+  { id: '32', num: 32, title: '峡谷裁判计分板', difficulty: 4, stage: 'MOBA 综合' },
+  { id: '33', num: 33, title: '战后档案流水线', difficulty: 5, stage: 'MOBA 综合' },
+  { id: '34', num: 34, title: '三路分推调度中心', difficulty: 5, stage: 'MOBA 综合' },
+  { id: '35', num: 35, title: '峡谷 API 网关', difficulty: 5, stage: 'MOBA 综合' },
 ];
 
 export function getChapter(id: string) {
   return chapters.find((c) => c.id === id);
 }
+
+export const coreChapters = chapters.filter((c) => c.num <= 20);
+export const mobaChapters = chapters.filter((c) => c.stage === 'MOBA 整合');
+export const comprehensiveChapters = chapters.filter((c) => c.stage === 'MOBA 综合');

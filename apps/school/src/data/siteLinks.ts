@@ -21,6 +21,25 @@ const chapterPaths: Record<string, string> = {
   '20': 'Java学习路线/20-框架与工程实践',
 };
 
+/** MOBA 题（21–35）→ 文档锚点 */
+const mobaDocAnchors: Record<string, string> = {
+  '21': '关-01',
+  '22': '关-02',
+  '23': '关-03',
+  '24': '关-04',
+  '25': '关-05',
+  '26': '关-06',
+  '27': '关-07',
+  '28': '关-08',
+  '29': '关-09',
+  '30': '关-10',
+  '31': '关-11',
+  '32': '关-12',
+  '33': '关-13',
+  '34': '关-14',
+  '35': '关-15',
+};
+
 /** Unambiguous tag → chapter; others fall back to current chapterId */
 const tagChapter: Record<string, string> = {
   入门: '01',
@@ -34,6 +53,7 @@ const tagChapter: Record<string, string> = {
   遍历: '04',
   方法: '05',
   返回值: '05',
+  类: '06',
   对象: '06',
   构造方法: '06',
   继承: '07',
@@ -46,11 +66,14 @@ const tagChapter: Record<string, string> = {
   异常: '10',
   'try-catch': '10',
   ArrayList: '11',
+  HashMap: '11',
+  集合: '11',
   IO: '12',
   'try-with-resources': '12',
   Thread: '13',
   Runnable: '13',
   synchronized: '14',
+  并发: '14',
   泛型: '15',
   反射: '16',
   Class: '16',
@@ -66,6 +89,8 @@ const tagChapter: Record<string, string> = {
 export const siteBase = import.meta.env.PROD ? 'https://huauauaa.github.io/hi-java' : 'http://localhost:1313/hi-java';
 
 export function chapterSiteUrl(chapterId: string): string {
+  const anchor = mobaDocAnchors[chapterId];
+  if (anchor) return `${siteBase}/Java学习路线/MOBA闯关题目/#${anchor}`;
   const path = chapterPaths[chapterId];
   return path ? `${siteBase}/${path}/` : `${siteBase}/`;
 }

@@ -10,6 +10,8 @@ const stageColors: Record<string, string> = {
   '核心 API': 'cyan',
   并发与高级: 'purple',
   底层与架构: 'red',
+  'MOBA 整合': 'gold',
+  'MOBA 综合': 'volcano',
 };
 
 const statusMeta: Record<QuizStatus, { label: string; color: string; action: string; className: string; icon: FC }> = {
