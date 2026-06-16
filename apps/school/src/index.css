@@ -14,3 +14,25 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* LeetCode-style quiz tabs */
+.quiz-tabs .ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+.quiz-tabs .ant-tabs-nav::before {
+  border-color: #3a3a3a !important;
+}
+.quiz-tabs .ant-tabs-tab {
+  color: #8c8c8c !important;
+  padding: 8px 12px !important;
+}
+.quiz-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #eff1f6 !important;
+}
+.quiz-tabs .ant-tabs-ink-bar {
+  background: #ffa116 !important;
+}
+.quiz-tabs .ant-tabs-content,
+.quiz-tabs .ant-tabs-tabpane {
+  height: 100%;
+}
