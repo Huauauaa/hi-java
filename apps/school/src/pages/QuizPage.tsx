@@ -1,9 +1,4 @@
-import {
-  CaretLeftOutlined,
-  CaretRightOutlined,
-  CloudUploadOutlined,
-  PlayCircleOutlined,
-} from '@ant-design/icons';
+import { CaretLeftOutlined, CaretRightOutlined, CloudUploadOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Button, Modal, Space, Tabs, Tag, Typography, message } from 'antd';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -94,9 +89,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
   if (!chapter || !quiz) {
     return (
       <SchoolLayout onBack={() => navigate('/java-route')} dark>
-        <div className="flex flex-1 items-center justify-center text-[#eff1f6]">
-          章节不存在
-        </div>
+        <div className="flex flex-1 items-center justify-center text-[#eff1f6]">章节不存在</div>
       </SchoolLayout>
     );
   }
@@ -134,7 +127,12 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
           <Space>
             <Tag color={diffColor[quiz.difficulty]}>{quiz.difficulty}</Tag>
             {quiz.tags.map((t) => (
-              <KnowledgeTag key={t} tag={t} chapterId={chapterId} className="!border-[#3a3a3a] !bg-[#1a1a1a] !text-[#b3b3b3]" />
+              <KnowledgeTag
+                key={t}
+                tag={t}
+                chapterId={chapterId}
+                className="!border-[#3a3a3a] !bg-[#1a1a1a] !text-[#b3b3b3]"
+              />
             ))}
           </Space>
           <Space>
@@ -207,9 +205,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                     <span className="text-[#8c8c8c]">输出：</span>
                     {ex.output}
                   </div>
-                  {ex.explanation && (
-                    <div className="mt-1 text-[#8c8c8c]">解释：{ex.explanation}</div>
-                  )}
+                  {ex.explanation && <div className="mt-1 text-[#8c8c8c]">解释：{ex.explanation}</div>}
                 </pre>
               </div>
             ))}
@@ -264,9 +260,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                           <Text className="!text-[#6e7681]">点击「运行」或「提交」查看结果</Text>
                         ) : (
                           <div>
-                            <Tag color={result.pass ? 'success' : 'error'}>
-                              {result.pass ? '通过' : '未通过'}
-                            </Tag>
+                            <Tag color={result.pass ? 'success' : 'error'}>{result.pass ? '通过' : '未通过'}</Tag>
                             <Paragraph
                               className={`!mb-0 mt-2 text-sm ${result.pass ? '!text-[#2cbb5d]' : '!text-[#ff375f]'}`}
                             >
@@ -300,9 +294,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
                               className="mb-2 flex items-center justify-between gap-2 rounded border border-[#3a3a3a] bg-[#282828] px-3 py-2"
                             >
                               <Space size="small" wrap>
-                                <Text className="!text-[#b3b3b3] text-xs">
-                                  #{submissions.length - i}
-                                </Text>
+                                <Text className="!text-[#b3b3b3] text-xs">#{submissions.length - i}</Text>
                                 <Text className="!text-[#8c8c8c] text-xs">
                                   {new Date(s.submittedAt).toLocaleString('zh-CN')}
                                 </Text>
@@ -332,11 +324,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
       </div>
 
       <Modal
-        title={
-          viewSubmit
-            ? `提交记录 · ${new Date(viewSubmit.submittedAt).toLocaleString('zh-CN')}`
-            : '提交记录'
-        }
+        title={viewSubmit ? `提交记录 · ${new Date(viewSubmit.submittedAt).toLocaleString('zh-CN')}` : '提交记录'}
         open={!!viewSubmit}
         onCancel={() => setViewSubmit(null)}
         width={720}
@@ -363,9 +351,7 @@ export const QuizPage: FC<Props> = ({ chapterId, navigate }) => {
         {viewSubmit && (
           <>
             <Space className="mb-3">
-              <Tag color={viewSubmit.pass ? 'success' : 'error'}>
-                {viewSubmit.pass ? '通过' : '未通过'}
-              </Tag>
+              <Tag color={viewSubmit.pass ? 'success' : 'error'}>{viewSubmit.pass ? '通过' : '未通过'}</Tag>
               <Text type="secondary" className="text-sm">
                 {viewSubmit.message}
               </Text>

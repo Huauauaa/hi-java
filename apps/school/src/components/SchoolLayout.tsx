@@ -1,8 +1,4 @@
-import {
-  ArrowLeftOutlined,
-  GithubOutlined,
-  ReadOutlined,
-} from '@ant-design/icons';
+import { ArrowLeftOutlined, GithubOutlined, ReadOutlined } from '@ant-design/icons';
 import { Button, Layout, Space } from 'antd';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -20,19 +16,11 @@ type Props = {
   dark?: boolean;
 };
 
-const docsOrigin = import.meta.env.PROD
-  ? 'https://huauauaa.github.io/hi-java'
-  : 'http://localhost:1313/hi-java';
+const docsOrigin = import.meta.env.PROD ? 'https://huauauaa.github.io/hi-java' : 'http://localhost:1313/hi-java';
 
 const docsUrl = `${docsOrigin}/`;
 
-export const SchoolLayout: FC<Props> = ({
-  children,
-  onBack,
-  backLabel = '返回首页',
-  extra,
-  dark = false,
-}) => {
+export const SchoolLayout: FC<Props> = ({ children, onBack, backLabel = '返回首页', extra, dark = false }) => {
   const shellRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -49,10 +37,7 @@ export const SchoolLayout: FC<Props> = ({
   );
 
   return (
-    <Layout
-      ref={shellRef}
-      className={`school-shell min-h-screen ${dark ? 'bg-[#1a1a1a]' : 'bg-transparent'}`}
-    >
+    <Layout ref={shellRef} className={`school-shell min-h-screen ${dark ? 'bg-[#1a1a1a]' : 'bg-transparent'}`}>
       <Header
         className={`school-header flex items-center justify-between px-4 md:px-6 ${
           dark ? 'border-b border-[#3a3a3a] bg-[#282828]' : ''

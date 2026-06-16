@@ -35,9 +35,7 @@ export const quizzes: Record<string, Quiz> = {
     story: `你刚被召入**峡谷学院**。教官要求用 Java 编写第一个**战报脚本**：在控制台打印欢迎语，证明你已接入战场终端。
 
 敌方无关，本关只验你的「Hello World」级仪式。`,
-    examples: [
-      { input: '运行 main', output: 'Hello, Summoner!', explanation: '精确输出这一行' },
-    ],
+    examples: [{ input: '运行 main', output: 'Hello, Summoner!', explanation: '精确输出这一行' }],
     constraints: ['类名必须为 Solution', '使用 System.out.println'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -113,9 +111,7 @@ export const quizzes: Record<string, Quiz> = {
     story: `一波小兵倒下，每只提供金币数记录在数组 \`{21, 21, 14, 21, 21}\`。
 
 声明该 int 数组，并用**增强 for** 循环累加，打印总金币（应为 \`98\`）。`,
-    examples: [
-      { input: 'minionGold[]', output: '98' },
-    ],
+    examples: [{ input: 'minionGold[]', output: '98' }],
     constraints: ['数组字面量初始化', '使用 for (... : ...) 累加'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -164,9 +160,7 @@ export const quizzes: Record<string, Quiz> = {
     story: `定义类 \`Hero\`：字段 \`String name\`、\`int level\`；构造方法传入二者；方法 \`void rankUp()\` 使 level + 1。
 
 main 中 \`new Hero("Garen", 1)\`，调用 rankUp() 后打印 level（应为 \`2\`）。`,
-    examples: [
-      { input: 'Garen rankUp once', output: '2' },
-    ],
+    examples: [{ input: 'Garen rankUp once', output: '2' }],
     constraints: ['独立 class Hero', '构造方法赋值 name 与 level'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -192,9 +186,7 @@ main 中 \`new Hero("Garen", 1)\`，调用 rankUp() 后打印 level（应为 \`2
     story: `抽象父类 \`Champion\`，方法 \`String ultName()\`。子类 \`Yasuo\` 返回 \`"Last Breath"\`，\`Ahri\` 返回 \`"Spirit Rush"\`。
 
 main 中：\`Champion c = new Yasuo();\` 打印 \`c.ultName()\`（应为 Last Breath）。`,
-    examples: [
-      { input: 'Champion c = new Yasuo()', output: 'Last Breath' },
-    ],
+    examples: [{ input: 'Champion c = new Yasuo()', output: 'Last Breath' }],
     constraints: ['Yasuo extends Champion', '@Override ultName'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -218,9 +210,7 @@ main 中：\`Champion c = new Yasuo();\` 打印 \`c.ultName()\`（应为 Last Br
     story: `接口 \`Skill\` 含 \`void cast()\`。类 \`Flash\` 实现 Skill，cast 中打印 \`"Blink!"\`。
 
 main 创建 Flash 实例，以 Skill 类型引用并调用 cast()。`,
-    examples: [
-      { input: 'flash.cast()', output: 'Blink!' },
-    ],
+    examples: [{ input: 'flash.cast()', output: 'Blink!' }],
     constraints: ['interface Skill', 'implements Skill'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -244,9 +234,7 @@ main 创建 Flash 实例，以 Skill 类型引用并调用 cast()。`,
     story: `匹配确认：当前召唤师名 \`name = "Faker"\`。若与目标 \`"Faker"\` **内容相等**（忽略引用），打印 \`"Same summoner"\`。
 
 禁止使用 \`==\` 比较字符串内容。`,
-    examples: [
-      { input: 'name equals "Faker"', output: 'Same summoner' },
-    ],
+    examples: [{ input: 'name equals "Faker"', output: 'Same summoner' }],
     constraints: ['使用 equals', '禁止 name == "Faker" 作为唯一判断'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -270,9 +258,7 @@ main 创建 Flash 实例，以 Skill 类型引用并调用 cast()。`,
     story: `方法 \`void useSkill(boolean onCooldown)\`：若 onCooldown 为 true，抛出 \`IllegalStateException("Skill on cooldown")\`。
 
 main 中 try 调用 \`useSkill(true)\`，catch 后打印 \`"Wait for CD"\`。`,
-    examples: [
-      { input: 'useSkill(true)', output: 'Wait for CD' },
-    ],
+    examples: [{ input: 'useSkill(true)', output: 'Wait for CD' }],
     constraints: ['throw new IllegalStateException', 'try-catch'],
     starterCode: `public class Solution {
     static void useSkill(boolean onCooldown) {
@@ -299,9 +285,7 @@ main 中 try 调用 \`useSkill(true)\`，catch 后打印 \`"Wait for CD"\`。`,
     story: `用 \`ArrayList<String>\` 依次添加装备：\`"Boots"\`, \`"Infinity Edge"\`, \`"Lord Dominik\'s"\`。
 
 打印 size()，应为 \`3\`。`,
-    examples: [
-      { input: '3 items', output: '3' },
-    ],
+    examples: [{ input: '3 items', output: '3' }],
     constraints: ['ArrayList<String>', 'add 三次', 'println(list.size())'],
     starterCode: `import java.util.ArrayList;
 
@@ -325,9 +309,7 @@ public class Solution {
     story: `使用 **try-with-resources** 打开 \`BufferedReader\`，读取一行战报（假设已绑定 \`reader\`），打印该行。
 
 模板中已声明 \`BufferedReader reader\`，你只需写 try (...) { ... } 块。`,
-    examples: [
-      { input: 'reader.readLine()', output: '第一行战报内容' },
-    ],
+    examples: [{ input: 'reader.readLine()', output: '第一行战报内容' }],
     constraints: ['try (BufferedReader', 'readLine()', 'try-with-resources'],
     starterCode: `import java.io.BufferedReader;
 
@@ -351,9 +333,7 @@ public class Solution {
     story: `创建线程打印 \`"Push top lane"\`：使用 \`new Thread(() -> ...).start()\` 或 Runnable。
 
 main 中启动线程并打印该消息（Lambda 体内需 println）。`,
-    examples: [
-      { input: 'thread start', output: 'Push top lane' },
-    ],
+    examples: [{ input: 'thread start', output: 'Push top lane' }],
     constraints: ['new Thread', 'start()', 'Push top lane'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -375,9 +355,7 @@ main 中启动线程并打印该消息（Lambda 体内需 println）。`,
     story: `对象 \`dragonPit\` 作为锁，在 \`synchronized (dragonPit) { ... }\` 中打印 \`"Secured Baron"\`。
 
 模拟仅一个队伍能拿下 Baron。`,
-    examples: [
-      { input: 'enter pit', output: 'Secured Baron' },
-    ],
+    examples: [{ input: 'enter pit', output: 'Secured Baron' }],
     constraints: ['synchronized (dragonPit)', '同一对象锁'],
     starterCode: `public class Solution {
     private static final Object dragonPit = new Object();
@@ -401,9 +379,7 @@ main 中启动线程并打印该消息（Lambda 体内需 println）。`,
     story: `泛型类 \`Chest<T>\` 有字段 \`T item\` 与 \`void store(T item)\`。
 
 main：\`Chest<String> c = new Chest<>();\` 存入 \`"Control Ward"\` 并打印 item。`,
-    examples: [
-      { input: 'store Control Ward', output: 'Control Ward' },
-    ],
+    examples: [{ input: 'store Control Ward', output: 'Control Ward' }],
     constraints: ['class Chest<T>', 'store 方法'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -428,9 +404,7 @@ main：\`Chest<String> c = new Chest<>();\` 存入 \`"Control Ward"\` 并打印 
     story: `在 main 中获取 \`Hero.class\`，调用 \`getSimpleName()\` 打印类名 \`"Hero"\`。
 
 禁止使用字符串字面量直接 println("Hero") 作为唯一方案——须通过 Class 获取。`,
-    examples: [
-      { input: 'Hero.class', output: 'Hero' },
-    ],
+    examples: [{ input: 'Hero.class', output: 'Hero' }],
     constraints: ['Hero.class', 'getSimpleName()'],
     starterCode: `class Hero {}
 
@@ -452,9 +426,7 @@ public class Solution {
     difficulty: 'Hard',
     tags: ['Stream', 'filter'],
     story: `列表 \`kills = Arrays.asList(2, 5, 8, 11, 15)\`。用 Stream 过滤 **≥ 10** 的元素，collect 到 List 并打印 size（应为 \`2\`）。`,
-    examples: [
-      { input: 'kills >= 10', output: '2' },
-    ],
+    examples: [{ input: 'kills >= 10', output: '2' }],
     constraints: ['stream()', 'filter', 'collect'],
     starterCode: `import java.util.Arrays;
 import java.util.List;
@@ -483,9 +455,7 @@ public class Solution {
 **问题**：\`new Hero()\` 创建的对象实例主要分配在 JVM 哪一块内存区域？
 
 答案关键词：\`堆\` 或 \`Heap\`（写在注释 \`// ANSWER: ...\` 中）。`,
-    examples: [
-      { input: 'new Hero()', output: '堆 / Heap' },
-    ],
+    examples: [{ input: 'new Hero()', output: '堆 / Heap' }],
     constraints: ['注释 // ANSWER:', '包含 堆 或 Heap'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -501,8 +471,7 @@ class Hero {}`,
       const m = code.match(/\/\/\s*ANSWER:\s*(.+)/i);
       if (!m) return { pass: false, message: '在 // ANSWER: 后写出答案' };
       const a = m[1];
-      if (a.includes('堆') || /heap/i.test(a))
-        return { pass: true, message: 'Accepted — 对象在堆上' };
+      if (a.includes('堆') || /heap/i.test(a)) return { pass: true, message: 'Accepted — 对象在堆上' };
       return { pass: false, message: '对象实例在堆（Heap）' };
     },
   },
@@ -514,9 +483,7 @@ class Hero {}`,
     story: `实现**静态内部类**单例 \`Nexus\`，私有构造，\`getInstance()\` 返回同一实例。
 
 main 中连续两次 getInstance()，用 \`==\` 比较并打印 \`true\`。`,
-    examples: [
-      { input: 'getInstance() twice', output: 'true' },
-    ],
+    examples: [{ input: 'getInstance() twice', output: 'true' }],
     constraints: ['static class Holder', 'getInstance', '私有构造'],
     starterCode: `public class Solution {
     public static void main(String[] args) {
@@ -529,8 +496,7 @@ main 中连续两次 getInstance()，用 \`==\` 比较并打印 \`true\`。`,
 // TODO: class Nexus 单例`,
     hint: 'private static class Holder { static final Nexus INSTANCE = new Nexus(); }',
     validate: (code) =>
-      hasAll(code, ['class Nexus', 'getInstance', 'Holder']) &&
-      (code.includes('INSTANCE') || code.includes('Instance'))
+      hasAll(code, ['class Nexus', 'getInstance', 'Holder']) && (code.includes('INSTANCE') || code.includes('Instance'))
         ? { pass: true, message: 'Accepted — 基地唯一' }
         : { pass: false, message: '静态内部类单例 + getInstance' },
   },
@@ -542,9 +508,7 @@ main 中连续两次 getInstance()，用 \`==\` 比较并打印 \`true\`。`,
     story: `在注释中写出：Spring Boot 里声明 REST 控制器、映射 GET \`/match/score\` 需要哪两个注解？
 
 格式：\`// ANSWER: @XXX 与 @YYY\`（含 RestController 与 GetMapping）。`,
-    examples: [
-      { input: 'GET /match/score', output: '@RestController + @GetMapping' },
-    ],
+    examples: [{ input: 'GET /match/score', output: '@RestController + @GetMapping' }],
     constraints: ['// ANSWER:', 'RestController', 'GetMapping'],
     starterCode: `// 战报 API 草稿
 public class MatchScoreApi {
@@ -555,8 +519,7 @@ public class MatchScoreApi {
     hint: '// ANSWER: @RestController 与 @GetMapping("/match/score")',
     validate: (code) => {
       const n = norm(code);
-      if (!n.includes('ANSWER'))
-        return { pass: false, message: '在 // ANSWER: 行填写注解' };
+      if (!n.includes('ANSWER')) return { pass: false, message: '在 // ANSWER: 行填写注解' };
       if (n.includes('RestController') && n.includes('GetMapping'))
         return { pass: true, message: 'Accepted — 接口定义正确' };
       return { pass: false, message: '需要 @RestController 与 @GetMapping' };

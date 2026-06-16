@@ -63,9 +63,7 @@ const tagChapter: Record<string, string> = {
   Spring: '20',
 };
 
-export const siteBase = import.meta.env.PROD
-  ? 'https://huauauaa.github.io/hi-java'
-  : 'http://localhost:1313/hi-java';
+export const siteBase = import.meta.env.PROD ? 'https://huauauaa.github.io/hi-java' : 'http://localhost:1313/hi-java';
 
 export function chapterSiteUrl(chapterId: string): string {
   const path = chapterPaths[chapterId];

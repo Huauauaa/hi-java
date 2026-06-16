@@ -12,10 +12,7 @@ const stageColors: Record<string, string> = {
   底层与架构: 'red',
 };
 
-const statusMeta: Record<
-  QuizStatus,
-  { label: string; color: string; action: string; className: string; icon: FC }
-> = {
+const statusMeta: Record<QuizStatus, { label: string; color: string; action: string; className: string; icon: FC }> = {
   doing: {
     label: '进行中',
     color: 'processing',

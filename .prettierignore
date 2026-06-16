@@ -1,0 +1,8 @@
+node_modules
+dist
+.pnpm-store
+apps/site/public
+packages/hugo-geekdoc
+pnpm-lock.yaml
+package-lock.yaml
+*.min.js

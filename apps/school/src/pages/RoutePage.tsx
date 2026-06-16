@@ -26,15 +26,9 @@ export const RoutePage: FC<Props> = ({ navigate }) => {
     return () => document.removeEventListener('visibilitychange', onVis);
   }, [reload]);
 
-  const doneCount = useMemo(
-    () => chapters.filter((ch) => statusOf(ch.id, progress) === 'done').length,
-    [progress],
-  );
+  const doneCount = useMemo(() => chapters.filter((ch) => statusOf(ch.id, progress) === 'done').length, [progress]);
 
-  const doingCount = useMemo(
-    () => chapters.filter((ch) => statusOf(ch.id, progress) === 'doing').length,
-    [progress],
-  );
+  const doingCount = useMemo(() => chapters.filter((ch) => statusOf(ch.id, progress) === 'doing').length, [progress]);
 
   const hasDoing = doingCount > 0;
 

@@ -4,9 +4,9 @@ Java 学习笔记、示例代码与 Web 学习门户。
 
 ## 在线访问
 
-| 站点 | 地址 |
-|------|------|
-| Java 文档 | https://huauauaa.github.io/hi-java/ |
+| 站点        | 地址                                       |
+| ----------- | ------------------------------------------ |
+| Java 文档   | https://huauauaa.github.io/hi-java/        |
 | School 门户 | https://huauauaa.github.io/hi-java/school/ |
 
 ## 项目结构

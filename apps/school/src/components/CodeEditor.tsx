@@ -1,11 +1,6 @@
 import type { FC, KeyboardEvent, UIEvent } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import {
-  filterCompletions,
-  highlightJava,
-  wordBeforeCursor,
-  type JavaCompletion,
-} from '../lib/javaEditorSupport';
+import { filterCompletions, highlightJava, wordBeforeCursor, type JavaCompletion } from '../lib/javaEditorSupport';
 
 type Props = {
   value: string;
@@ -38,26 +33,29 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
     setActiveIndex(0);
   }, []);
 
-  const openSuggestions = useCallback((prefix: string, cursor: number) => {
-    const items = filterCompletions(prefix);
-    if (items.length === 0) {
-      closeSuggestions();
-      return;
-    }
-    const ta = textareaRef.current;
-    if (!ta) return;
+  const openSuggestions = useCallback(
+    (prefix: string, cursor: number) => {
+      const items = filterCompletions(prefix);
+      if (items.length === 0) {
+        closeSuggestions();
+        return;
+      }
+      const ta = textareaRef.current;
+      if (!ta) return;
 
-    const before = value.slice(0, cursor);
-    const line = before.split('\n').length;
-    const col = (before.match(/[^\n]*$/)?.[0] ?? '').length;
+      const before = value.slice(0, cursor);
+      const line = before.split('\n').length;
+      const col = (before.match(/[^\n]*$/)?.[0] ?? '').length;
 
-    setSuggestions(items);
-    setActiveIndex(0);
-    setPopup({
-      top: line * 24 + 8,
-      left: col * 8 + 12,
-    });
-  }, [closeSuggestions, value]);
+      setSuggestions(items);
+      setActiveIndex(0);
+      setPopup({
+        top: line * 24 + 8,
+        left: col * 8 + 12,
+      });
+    },
+    [closeSuggestions, value],
+  );
 
   const applyCompletion = useCallback(
     (item: JavaCompletion) => {
@@ -66,8 +64,7 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
 
       const cursor = ta.selectionStart;
       const prefix = wordBeforeCursor(value, cursor);
-      const next =
-        value.slice(0, cursor - prefix.length) + item.insert + value.slice(ta.selectionEnd);
+      const next = value.slice(0, cursor - prefix.length) + item.insert + value.slice(ta.selectionEnd);
       onChange(next);
       closeSuggestions();
 
@@ -189,9 +186,7 @@ export const CodeEditor: FC<Props> = ({ value, onChange, language = 'java' }) =>
                   }}
                 >
                   <span>{item.label}</span>
-                  {item.detail && (
-                    <span className="text-[#8c8c8c]">{item.detail}</span>
-                  )}
+                  {item.detail && <span className="text-[#8c8c8c]">{item.detail}</span>}
                 </button>
               </li>
             ))}

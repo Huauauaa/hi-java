@@ -26,12 +26,12 @@ sb.append("a").append("b");
 
 ### 包装类
 
-| 基本类型 | 包装类 |
-|---------|--------|
-| `int` | `Integer` |
-| `double` | `Double` |
+| 基本类型  | 包装类    |
+| --------- | --------- |
+| `int`     | `Integer` |
+| `double`  | `Double`  |
 | `boolean` | `Boolean` |
-| … | … |
+| …         | …         |
 
 - 自动装箱 / 拆箱：`Integer i = 10; int n = i;`
 - 缓存：`Integer.valueOf(-128~127)` 复用实例

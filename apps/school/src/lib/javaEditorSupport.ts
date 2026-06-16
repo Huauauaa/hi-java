@@ -108,15 +108,10 @@ const COLOR = {
   type: '#4ec9b0',
 } as const;
 
-const colorSpan = (color: string, text: string) =>
-  `<span style="color:${color}">${text}</span>`;
+const colorSpan = (color: string, text: string) => `<span style="color:${color}">${text}</span>`;
 
 function escapeHtml(text: string) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 /** ponytail: regex highlighter — covers common Java tokens, not a full parser */
@@ -142,8 +137,5 @@ export function wordBeforeCursor(code: string, cursor: number) {
 export function filterCompletions(prefix: string, limit = 8) {
   if (!prefix) return JAVA_COMPLETIONS.slice(0, limit);
   const lower = prefix.toLowerCase();
-  return JAVA_COMPLETIONS.filter((item) => item.label.toLowerCase().startsWith(lower)).slice(
-    0,
-    limit,
-  );
+  return JAVA_COMPLETIONS.filter((item) => item.label.toLowerCase().startsWith(lower)).slice(0, limit);
 }

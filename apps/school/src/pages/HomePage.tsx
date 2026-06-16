@@ -63,9 +63,7 @@ const courses: Course[] = [
   },
 ];
 
-const docsUrl = import.meta.env.PROD
-  ? 'https://huauauaa.github.io/hi-java/'
-  : 'http://localhost:1313/hi-java/';
+const docsUrl = import.meta.env.PROD ? 'https://huauauaa.github.io/hi-java/' : 'http://localhost:1313/hi-java/';
 
 export const HomePage: FC<Props> = ({ navigate }) => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -78,11 +76,7 @@ export const HomePage: FC<Props> = ({ navigate }) => {
         .from('.hero-title', { y: 28, opacity: 0, duration: 0.6 }, '-=0.25')
         .from('.hero-lead', { y: 20, opacity: 0, duration: 0.5 }, '-=0.35')
         .from('.hero-actions > *', { y: 16, opacity: 0, stagger: 0.08, duration: 0.42 }, '-=0.2')
-        .from(
-          '.section-heading, .section-sub',
-          { y: 16, opacity: 0, stagger: 0.08, duration: 0.45 },
-          '-=0.05',
-        )
+        .from('.section-heading, .section-sub', { y: 16, opacity: 0, stagger: 0.08, duration: 0.45 }, '-=0.05')
         .from('.course-card', { y: 34, opacity: 0, stagger: 0.07, duration: 0.5 }, '-=0.15');
     },
     { scope: pageRef },
@@ -96,16 +90,10 @@ export const HomePage: FC<Props> = ({ navigate }) => {
           <p className="hero-eyebrow">Summoner Codex · hi-java</p>
           <h1 className="hero-title">在峡谷里学会 Java</h1>
           <p className="hero-lead">
-            School 把文档、闯关与代码练习串成一条路线。从环境搭建到框架实践，用 MOBA
-            场景把语法练到手上。
+            School 把文档、闯关与代码练习串成一条路线。从环境搭建到框架实践，用 MOBA 场景把语法练到手上。
           </p>
           <div className="hero-actions">
-            <Button
-              type="primary"
-              size="large"
-              icon={<PlayCircleOutlined />}
-              onClick={() => navigate('/java-route')}
-            >
+            <Button type="primary" size="large" icon={<PlayCircleOutlined />} onClick={() => navigate('/java-route')}>
               开始 Java 学习路线
             </Button>
             <Button size="large" href={docsUrl} target="_blank" rel="noreferrer">

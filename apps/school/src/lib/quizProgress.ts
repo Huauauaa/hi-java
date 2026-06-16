@@ -34,10 +34,7 @@ function openDb(): Promise<IDBDatabase> {
   });
 }
 
-async function withStore<T>(
-  mode: IDBTransactionMode,
-  fn: (store: IDBObjectStore) => IDBRequest<T>,
-): Promise<T> {
+async function withStore<T>(mode: IDBTransactionMode, fn: (store: IDBObjectStore) => IDBRequest<T>): Promise<T> {
   const db = await openDb();
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE, mode);
@@ -88,11 +85,7 @@ export async function getAllRecords(): Promise<QuizRecord[]> {
   return rows.map((r) => normalize(r)!);
 }
 
-export async function saveRecord(
-  chapterId: string,
-  content: string,
-  status: 'doing' | 'done',
-): Promise<void> {
+export async function saveRecord(chapterId: string, content: string, status: 'doing' | 'done'): Promise<void> {
   await migrateFromLocalStorage();
   const prev = normalize(await withStore('readonly', (s) => s.get(chapterId)));
   const record: QuizRecord = {

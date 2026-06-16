@@ -11,7 +11,12 @@
     "build:theme": "npm install --prefix packages/hugo-geekdoc && npm --prefix packages/hugo-geekdoc run gulp -- default",
     "build:site": "pnpm --filter @hi-java/site build",
     "build:school": "VITE_BASE=${VITE_BASE:-/hi-java/school/} pnpm --filter @hi-java/school build",
-    "merge:pages": "mkdir -p apps/site/public/school && cp -r apps/school/dist/. apps/site/public/school/"
+    "merge:pages": "mkdir -p apps/site/public/school && cp -r apps/school/dist/. apps/site/public/school/",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.8.4"
   },
   "author": "Harvey",
   "license": "MIT"

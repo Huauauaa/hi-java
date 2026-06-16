@@ -25,21 +25,21 @@ Calculator mul = (a, b) -> { return a * b; };
 
 ### 方法引用
 
-| 形式 | 示例 |
-|------|------|
-| 静态 | `Integer::parseInt` |
-| 实例 | `System.out::println` |
-| 特定对象 | `str::length` |
-| 构造 | `ArrayList::new` |
+| 形式     | 示例                  |
+| -------- | --------------------- |
+| 静态     | `Integer::parseInt`   |
+| 实例     | `System.out::println` |
+| 特定对象 | `str::length`         |
+| 构造     | `ArrayList::new`      |
 
 ### 常用函数式接口
 
-| 接口 | 方法 | 用途 |
-|------|------|------|
-| `Predicate<T>` | `test(T)` | 判断 |
-| `Function<T,R>` | `apply(T)` | 转换 |
-| `Consumer<T>` | `accept(T)` | 消费 |
-| `Supplier<T>` | `get()` | 供给 |
+| 接口            | 方法        | 用途 |
+| --------------- | ----------- | ---- |
+| `Predicate<T>`  | `test(T)`   | 判断 |
+| `Function<T,R>` | `apply(T)`  | 转换 |
+| `Consumer<T>`   | `accept(T)` | 消费 |
+| `Supplier<T>`   | `get()`     | 供给 |
 
 ### Stream API
 
